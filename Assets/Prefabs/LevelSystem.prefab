@@ -1227,7 +1227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5058824, g: 0.82745105, b: 1, a: 0.40392157}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4696,6 +4696,7 @@ GameObject:
   - component: {fileID: 1767576360125769320}
   - component: {fileID: 8597543453316264183}
   - component: {fileID: 3913248501757561216}
+  - component: {fileID: 5922850680427037780}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -4743,7 +4744,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.08045999, g: 0.15152298, b: 0.29799998, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4764,6 +4765,19 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Watch Ad And Gain 2x Money
+--- !u!114 &5922850680427037780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6742195417830938837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76f114c7a7287a54389946b6fb1b5c23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TextId: gainadmoney
 --- !u!1 &6915870626325501510
 GameObject:
   m_ObjectHideFlags: 0

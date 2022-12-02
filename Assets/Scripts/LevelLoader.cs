@@ -15,8 +15,15 @@ public class LevelLoader : MonoBehaviour
 
     void Start()
     {
-        Current = this;
-        changeLevel("Level " + PlayerPrefs.GetInt("currentLevel"));
+
+        Current = this;         // instance
+
+
+        changeLevel("Level " + PlayerPrefs.GetInt("currentLevel"));         // en son kalinan bolumden baslatiyor.
+        
+        GameObject.FindObjectOfType<AdController>().initAdController();             //Ad Controller sinifi kendi icinde static olarak olusturuluyor.
+        
+        
 
     }
 

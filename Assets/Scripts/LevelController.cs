@@ -10,12 +10,13 @@ public class LevelController : MonoBehaviour
 
     [Header("UI ELEMANLARI")]
     public GameObject startMenu, gameMenu, gameOverMenu, finishMenu;
+
     public Button rewardedAdButton;
     public Text scoreText, finishScoreText, currentLevelText, nextLevelText, startingMenuMoneyText, gameOverMenuMoneyText, finishGameMenuMoneyText;
     public Slider levelProgressBar;
     public DailyReward dailyReward;
-    
-    
+
+
     [Header("LEVEL BILGILERI")]
     int currentLevel;
     public int score;
@@ -35,12 +36,11 @@ public class LevelController : MonoBehaviour
 
         PlayerControler.Current = GameObject.FindObjectOfType<PlayerControler>();   // karakter static objesi gecikme olmamasi icin burada kuruluyor.
 
-
         //burada oyun sahnesindeki her bir tex objesinin icerisindeki initTextObject fonksiyonu cagirilarak baslangicta dil guncellemesi yapiliyor.
         GameObject[] parentsInScene = this.gameObject.scene.GetRootGameObjects();
         foreach (GameObject parent in parentsInScene)
         {
-            TextObject[] textObjectsInParent= parent.GetComponentsInChildren<TextObject>(true);                                 
+            TextObject[] textObjectsInParent = parent.GetComponentsInChildren<TextObject>(true);
             foreach (TextObject textObject in textObjectsInParent)
             {
                 textObject.InitTextObject();
@@ -56,9 +56,10 @@ public class LevelController : MonoBehaviour
         nextLevelText.text = (currentLevel + 2).ToString();
 
         updateMoneyText();      // para textlerini guncelleniyor
-        
+
         gameMusicAudioSource = Camera.main.GetComponent<AudioSource>();     // kameranin audio source bilesenini aliniyor.
 
+        AdController.instance.showIntersititial();
 
         //giveMoneyToPlayer(3000);
 
@@ -72,11 +73,15 @@ public class LevelController : MonoBehaviour
             levelProgressBar.value = 1 - (distance / maxDistance);
         }
     }
-    public void showRewardedAd(){
-       
+    // 2x odul veren buton.
+    public void showRewardedAd()
+    {
+        AdController.instance.showRewardedAd();
+        rewardedAdButton.gameObject.SetActive(false);
     }
     public void StartLevel()    // bolumu baslatma butonu ile calisan fonksiyon.
     {
+        AdController.instance.hideBannerAd();
         maxDistance = finishLine.transform.position.z - PlayerControler.Current.transform.position.z; // baslangic noktasindan sona kadar maximum mesafe aliniyor
 
         PlayerControler.Current.ChangeSpeed(PlayerControler.Current.runningSpeed);  // karakterin hizi ayarlaniyor.
@@ -99,8 +104,11 @@ public class LevelController : MonoBehaviour
 
     }
     public void GameOver() // olunce calisan fonksiyon
-    {   
-        
+    {
+        AdController.instance.showIntersititial();
+        AdController.instance.showBannerAd();
+
+
         updateMoneyText();
         gameMusicAudioSource.Stop();
         gameMusicAudioSource.PlayOneShot(gameOverAudioClip);
@@ -109,8 +117,14 @@ public class LevelController : MonoBehaviour
         gameActive = false;
     }
     public void finishGame()    // bolumu gecince calisan fonksiyon
-    {   
-        
+    {
+        AdController.instance.showIntersititial();
+        if (AdController.instance.isRewardedLoaded)
+            rewardedAdButton.gameObject.SetActive(true);
+        else
+            rewardedAdButton.gameObject.SetActive(false);
+        AdController.instance.showBannerAd();
+
         giveMoneyToPlayer(score);
         gameMusicAudioSource.Stop();
         gameMusicAudioSource.PlayOneShot(victoryAudioClip);
@@ -119,6 +133,7 @@ public class LevelController : MonoBehaviour
         finishScoreText.text = scoreText.text.ToString();
         gameMenu.SetActive(false);
         finishMenu.SetActive(true);
+        PlayerControler.Current.animator.SetBool("running", false); //karakterin kosma animasyonu durduruluyor
         gameActive = false;
 
     }
